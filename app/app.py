@@ -21,3 +21,4 @@ if __name__ == '__main__':
     time.sleep(30)  # Wait for MySQL
     app.run(host='0.0.0.0', port=5000)
 return f"Updated at {time.ctime()}! Logs: {result}"
+return 'CI/CD LIVE! Deployed at Wed Mar 11 21:47:26 IST 2026'
