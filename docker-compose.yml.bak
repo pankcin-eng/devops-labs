@@ -1,0 +1,40 @@
+services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: devops-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: devops123
+      MYSQL_DATABASE: devops_lab
+      MYSQL_USER: pank
+      MYSQL_PASSWORD: devops123
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  python-app:
+    build: .
+    container_name: devops-python
+    environment:
+      DB_HOST: mysql-db
+      DB_USER: pank
+      DB_PASS: devops123
+      DB_NAME: devops_lab
+
+volumes:
+  mysql_data:
+
+services:
+  mysql-db:
+    # ... existing config ...
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  python-app:
+    # ... existing ...
+    depends_on:
+      mysql-db:
+        condition: service_healthy

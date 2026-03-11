@@ -1,0 +1,20 @@
+---
+- name: Deploy Docker Compose app
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: Docker Compose up
+      shell: docker compose up -d
+      args:
+        chdir: /home/pank@lab.local/devops-labs
+
+    - name: Show status
+      shell: docker compose ps
+      args:
+        chdir: /home/pank@lab.local/devops-labs
+      register: status
+
+    - name: Display
+      debug:
+        msg: "{{ status.stdout_lines }}"

@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS devops_lab.logs (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  message VARCHAR(255),
+  timestamp DATETIME
+);

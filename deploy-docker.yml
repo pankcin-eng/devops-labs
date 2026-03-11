@@ -1,0 +1,19 @@
+---
+- name: Deploy full Docker stack
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Backup old stack
+      copy:
+        src: /tmp/docker-compose.yml
+        dest: /tmp/docker-compose-backup.yml
+        remote_src: yes
+      ignore_errors: yes
+
+    - name: Copy entire devops-labs to tmp
+      copy:
+        src: .
+        dest: /tmp/devops-labs/
+
+    - name: Deploy from tmp folder
+      shell: cd /tmp/devops-labs && docker compose up -d --build

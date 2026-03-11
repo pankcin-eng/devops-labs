@@ -1,0 +1,19 @@
+---
+- name: Simple Docker deploy
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Stop old stack
+      shell: cd /tmp/devops-labs && docker compose down || true
+
+    - name: Copy devops-labs
+      copy:
+        src: .
+        dest: /tmp/devops-labs/
+
+    - name: Deploy MySQL + Python
+      shell: |
+        cd /tmp/devops-labs && 
+        docker compose up -d mysql-db && 
+        sleep 20 && 
+        docker compose up -d python-app
